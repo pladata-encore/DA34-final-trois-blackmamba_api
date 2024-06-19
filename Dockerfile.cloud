@@ -1,0 +1,20 @@
+FROM python:3.11-buster
+
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /src
+
+RUN pip install poetry
+
+COPY pyproject.toml* poetry.lock* ./
+
+# 배포에 필요
+COPY api api
+COPY entrypoint.sh ./
+
+
+RUN poetry config virtualenvs.in-project true
+RUN if [ -f pyproject.toml ]; then poetry install --no-root; fi
+
+# DB migration 수행하고 uvicorn 서버 실행
+ENTRYPOINT ["bash", "entrypoint.sh"]  
