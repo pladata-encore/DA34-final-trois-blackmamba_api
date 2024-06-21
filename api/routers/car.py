@@ -26,15 +26,6 @@ async def update_car(cid:int, car_body: car_schema.CarCreate, db: AsyncSession =
     return await car_crud.update_car(db, car_body, original=car)
 
 
-@router.delete("/cars/{cid}", response_model=None)
-async def delete_car(cid:int, db: AsyncSession = Depends(get_db)):
-    car = await car_crud.get_car(db, cid=cid)
-    if car is None:
-        raise HTTPException(status_code=404, detail="car not found")
-    
-    return await car_crud.delete_car(db, original=car)
-
-
 @router.get("/cars/data", response_model=dict)
 async def get_car_data(db: AsyncSession = Depends(get_db)):
     return await car_crud.get_car_data(db)

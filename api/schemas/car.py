@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from datetime import datetime
 
 
 class CarBase(BaseModel):
@@ -6,12 +7,12 @@ class CarBase(BaseModel):
     carName: str | None = Field(None, example="avante")
     carYear: str | None = Field(None, example="2010-2015")
     carCode: str | None = Field(None, example="MD")
-    isActive: bool = Field(True, description="서비스 사용 여부") 
-
+    isActive: bool = Field(True, example=True)
+    createDttm: datetime | None = Field(None, example="2022-01-01T00:00:00")
+    updateDttm: datetime | None = Field(None, example="2022-01-01T00:00:00")
 
 class CarCreate(CarBase):
     pass
-
 
 class CarCreateResponse(CarCreate):
     cid: int
