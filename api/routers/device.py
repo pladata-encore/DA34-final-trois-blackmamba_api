@@ -25,12 +25,3 @@ async def update_device(uid:int, device_body: device_schema.DeviceCreate, db: As
         raise HTTPException(status_code=404, detail="Device not found")
     
     return await device_crud.update_device(db, device_body, original=device)
-
-
-@router.delete("/devices/{uid}", response_model=None)
-async def delete_device(uid:int, db: AsyncSession = Depends(get_db)):
-    device = await device_crud.get_device(db, uid=uid)
-    if device is None:
-        raise HTTPException(status_code=404, detail="Device not found")
-    
-    return await device_crud.delete_device(db, original=device)

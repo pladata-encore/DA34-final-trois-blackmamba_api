@@ -27,13 +27,5 @@ async def update_car(cid:int, car_body: car_schema.CarCreate, db: AsyncSession =
 
 
 @router.get("/cars/data", response_model=dict)
-async def get_car_data(db: AsyncSession = Depends(get_db)):
-    return await car_crud.get_car_data(db)
-
-
-@router.get("/cars/code", response_model=str)
-async def get_car_code(carCompany: str, carName: str, carYear: str, db: AsyncSession = Depends(get_db)):
-    car_code = await car_crud.get_car_code(db, carCompany, carName, carYear)
-    if car_code is None:
-        raise HTTPException(status_code=404, detail="Car code not found")
-    return car_code
+async def get_car_menulist(db: AsyncSession = Depends(get_db)):
+    return await car_crud.get_car_menulist(db)

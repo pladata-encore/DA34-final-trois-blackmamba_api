@@ -18,10 +18,10 @@ def add_car_to_api(car_data):
 # 각 레코드를 API에 추가
 for _, row in df.iterrows():
     car_data = {
+        "cid": row['cid'],
         "carCompany": row['carCompany'],
         "carName": row['carName'],
         "carYear": row['carYear'],
         "carCode": row['carCode'],
-        "isActive": row['isActive']
     }
     add_car_to_api(car_data)

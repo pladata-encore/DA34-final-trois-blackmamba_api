@@ -50,7 +50,7 @@ async def update_car(db: AsyncSession, car_create:car_schema.CarCreate, original
     await db.refresh(original)
     return original
 
-async def get_car_data(db: AsyncSession) -> dict:
+async def get_car_menulist(db: AsyncSession) -> dict:
     result: Result = await db.execute(
         select(
             car_model.Car.carCompany,
@@ -60,24 +60,13 @@ async def get_car_data(db: AsyncSession) -> dict:
     )
     cars = result.fetchall()
     
-    car_data = {}
+    menulist = {}
     for car in cars:
         carCompany, carName, carYear = car
-        if carCompany not in car_data:
-            car_data[carCompany] = {}
-        if carName not in car_data[carCompany]:
-            car_data[carCompany][carName] = []
-        car_data[carCompany][carName].append(carYear)
+        if carCompany not in menulist:
+            menulist[carCompany] = {}
+        if carName not in menulist[carCompany]:
+            menulist[carCompany][carName] = []
+        menulist[carCompany][carName].append(carYear)
     
-    return car_data
-
-async def get_car_code(db: AsyncSession, carCompany: str, carName: str, carYear: str) -> str | None:
-    result: Result = await db.execute(
-        select(car_model.Car.carCode).filter(
-            car_model.Car.carCompany == carCompany,
-            car_model.Car.carName == carName,
-            car_model.Car.carYear == carYear
-        )
-    )
-    car_code = result.scalars().first()
-    return car_code
+    return menulist

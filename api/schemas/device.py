@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import List
 
 class DeviceBase(BaseModel):
-    userAgent: List[str] | None = Field(None, example=["Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"])
+    userAgent: str | None = Field(None, example="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36")
     cid: int
     createDttm: datetime
     updateDttm: datetime

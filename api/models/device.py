@@ -9,7 +9,7 @@ class Device(Base):
     __tablename__ = "devices"
 
     uid = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    userAgent = Column(JSON, default=[])
+    userAgent = Column(String(200))
     cid = Column(Integer, ForeignKey('cars.cid'))
     createDttm = Column(DateTime, default=func.now())
     updateDttm = Column(DateTime, default=func.now(), onupdate=func.now())
