@@ -31,7 +31,7 @@ async def get_cars(db: AsyncSession) -> list[car_model.Car]:
     )
     return result.scalars().all()
 
-async def get_car(db: AsyncSession, cid: int) -> car_model.Car | None:
+async def fetch_car(db: AsyncSession, cid: int) -> car_model.Car | None:
     result: Result = await db.execute(
         select(car_model.Car).filter(car_model.Car.cid == cid)
     )
