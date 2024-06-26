@@ -55,18 +55,19 @@ async def get_car_menulist(db: AsyncSession) -> dict:
         select(
             car_model.Car.carCompany,
             car_model.Car.carName,
-            car_model.Car.carYear
+            car_model.Car.carYear,
+            car_model.Car.cid,
         )
     )
     cars = result.fetchall()
     
     menulist = {}
     for car in cars:
-        carCompany, carName, carYear = car
+        carCompany, carName, carYear, cid = car
         if carCompany not in menulist:
             menulist[carCompany] = {}
         if carName not in menulist[carCompany]:
             menulist[carCompany][carName] = []
-        menulist[carCompany][carName].append(carYear)
+        menulist[carCompany][carName].append({'year': carYear, 'cid': cid})
     
     return menulist
