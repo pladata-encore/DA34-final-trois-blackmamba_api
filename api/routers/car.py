@@ -30,6 +30,6 @@ async def update_car(cid:int, car_body: car_schema.CarCreate, db: AsyncSession =
     
     return await car_crud.update_car(db, car_body, original=car)
 
-@router.get("/cars/data", response_model=dict)
+@router.get("/carmenu", response_model=dict)
 async def get_car_menulist(db: AsyncSession = Depends(get_db)):
     return await car_crud.get_car_menulist(db)
