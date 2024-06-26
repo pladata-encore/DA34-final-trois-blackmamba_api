@@ -56,7 +56,7 @@ async def get_car_menulist(db: AsyncSession) -> dict:
             car_model.Car.carCompany,
             car_model.Car.carName,
             car_model.Car.carYear,
-            car_model.Car.cid,
+            car_model.Car.cid
         )
     )
     cars = result.fetchall()
