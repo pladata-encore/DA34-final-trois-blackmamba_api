@@ -31,6 +31,19 @@ async def get_cars(db: AsyncSession) -> list[car_model.Car]:
     )
     return result.scalars().all()
 
+async def get_cid(db: AsyncSession, carCompany: str, carName: str, carYear: str) -> int | None:
+    result: Result = await db.execute(
+        select(
+            car_model.Car.cid
+        ).where(
+            car_model.Car.carCompany == carCompany,
+            car_model.Car.carName == carName,
+            car_model.Car.carYear == carYear
+        )
+    )
+    car_cid = result.scalar_one_or_none()
+    return car_cid
+
 async def fetch_car(db: AsyncSession, cid: int) -> car_model.Car | None:
     result: Result = await db.execute(
         select(car_model.Car).filter(car_model.Car.cid == cid)
@@ -55,19 +68,18 @@ async def get_car_menulist(db: AsyncSession) -> dict:
         select(
             car_model.Car.carCompany,
             car_model.Car.carName,
-            car_model.Car.carYear,
-            car_model.Car.cid
+            car_model.Car.carYear
         )
     )
     cars = result.fetchall()
     
     menulist = {}
     for car in cars:
-        carCompany, carName, carYear, cid = car
+        carCompany, carName, carYear = car
         if carCompany not in menulist:
             menulist[carCompany] = {}
         if carName not in menulist[carCompany]:
             menulist[carCompany][carName] = []
-        menulist[carCompany][carName].append({'year': carYear, 'cid': cid})
+        menulist[carCompany][carName].append(carYear)
     
     return menulist

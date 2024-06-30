@@ -18,6 +18,13 @@ async def read_car(cid: int, db: AsyncSession = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Car not found")
     return car
 
+@router.get("/getCid", response_model=int)
+async def get_cid(carCompany: str, carName: str, carYear: str, db: AsyncSession = Depends(get_db)):
+    cid = await car_crud.get_cid(db, carCompany, carName, carYear)
+    if cid is None:
+        raise HTTPException(status_code=404, detail="Car not found")
+    return cid
+
 @router.post("/cars", response_model=car_schema.CarCreateResponse)
 async def create_car(car_body: car_schema.CarCreate, db: AsyncSession = Depends(get_db)):
     return await car_crud.create_car(db, car_body)
