@@ -1,4 +1,5 @@
 cid,carYear,carCompany,dummy_company_code,carName,carCode
+0,unselected,unselected,unselected,unselected,unselected
 1,2011~2019,Audi,AUD,a6,C7
 2,2009~2016,Benz,BEZ,eclass,W212
 3,2014~2021,Benz,BEZ,cclass,W205
